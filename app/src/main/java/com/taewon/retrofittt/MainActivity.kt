@@ -20,7 +20,7 @@ class MainActivity : Activity() {
         setContentView(R.layout.activity_main)
         var imageView: ImageView = findViewById(R.id.icon)
 
-        val response = SearchRetrofit.getService().requestSearchAccount("용정이 두둥등장",API_KEY)
+        val response = SearchRetrofit.getService().requestSearchAccount("태원이 심신미약",API_KEY)
         response.enqueue(object : Callback<Summoner>{
             override fun onResponse(call: Call<Summoner>, response: Response<Summoner>) {
                 /*response?.let {
