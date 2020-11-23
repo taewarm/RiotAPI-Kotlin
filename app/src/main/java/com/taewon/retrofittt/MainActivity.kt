@@ -56,6 +56,28 @@ class MainActivity : Activity() {
             })
 
         }
+        val response = SearchRetrofit.getService().requestSearchAccount("태원이 심신미약",API_KEY)
+        response.enqueue(object : Callback<Summoner>{
+            override fun onResponse(call: Call<Summoner>, response: Response<Summoner>) {
+                /*response?.let {
+                    var asd: Summoner? = it.body()
+
+                    Log.i("여기",asd.toString())
+                }*/
+                var asd: Summoner? = response.body()
+                AcName = asd?.name
+                AcLevel = asd?.summonerLevel
+                AcIcon = asd?.profileIconId
+
+                Log.i("여기",asd.toString())
+                IconURL = "http://ddragon.leagueoflegends.com/cdn/10.23.1/img/profileicon/${AcIcon}.png"
+                imageView.loadUrl(IconURL)
+            }
+
+            override fun onFailure(call: Call<Summoner>, t: Throwable) {
+                Log.i("여기",t.message)
+            }
+        })
 
     }
     fun ImageView.loadUrl(url: String){
