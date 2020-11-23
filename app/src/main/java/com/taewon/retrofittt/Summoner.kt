@@ -1,9 +1,9 @@
 package com.taewon.retrofittt
 
-data class Summoner(val profileIconId: String,
-                    val name: String,
-                    val summonerLevel: String,
-                    val revisionDate:  String,
-                    val id: String,
-                    val accountId: String)
+data class Summoner(var profileIconId: String,
+                    var name: String,
+                    var summonerLevel: String,
+                    var revisionDate:  String,
+                    var id: String,
+                    var accountId: String)
 

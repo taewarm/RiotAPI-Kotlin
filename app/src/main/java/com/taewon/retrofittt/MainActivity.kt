@@ -3,7 +3,10 @@ package com.taewon.retrofittt
 import android.app.Activity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Button
+import android.widget.EditText
 import android.widget.ImageView
+import android.widget.TextView
 import com.squareup.picasso.Picasso
 import retrofit2.Call
 import retrofit2.Callback
@@ -15,33 +18,44 @@ class MainActivity : Activity() {
     var AcName: String? =""
     var AcLevel: String? =""
     var AcIcon: String? =""
+    var AcId: String?=""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         var imageView: ImageView = findViewById(R.id.icon)
+        var textId: TextView = findViewById(R.id.AccountId)
+        var textLev: TextView = findViewById(R.id.AccountLevel)
+        var edtId: EditText = findViewById(R.id.edt_Id)
+        var btnClick : Button = findViewById(R.id.btn_Ok)
 
-        val response = SearchRetrofit.getService().requestSearchAccount("용정이 두둥등장",API_KEY)
-        response.enqueue(object : Callback<Summoner>{
-            override fun onResponse(call: Call<Summoner>, response: Response<Summoner>) {
-                /*response?.let {
-                    var asd: Summoner? = it.body()
+        btnClick.setOnClickListener{
+            val response = SearchRetrofit.getService().requestSearchAccount(edtId.text.toString(),API_KEY)
+            response.enqueue(object : Callback<Summoner>{
+                override fun onResponse(call: Call<Summoner>, response: Response<Summoner>) {
+                    /*response?.let {
+                        var asd: Summoner? = it.body()
 
-                    Log.i("여기",asd.toString())
-                }*/
-                var asd: Summoner? = response.body()
-                AcName = asd?.name
-                AcLevel = asd?.summonerLevel
-                AcIcon = asd?.profileIconId
+                        Log.i("여기",asd.toString())
+                    }*/
+                    var asd: Summoner? = response.body()
+                    AcName = asd?.name
+                    AcLevel = asd?.summonerLevel
+                    AcIcon = asd?.profileIconId
+                    AcId = asd?.id
 
-                Log.i("여기",asd.toString())
-                IconURL = "http://ddragon.leagueoflegends.com/cdn/10.23.1/img/profileicon/${AcIcon}.png"
-                imageView.loadUrl(IconURL)
-            }
+                    Log.i("여기","이름 : "+AcName+","+"레벨 : "+AcLevel+","+"id값 : "+AcId)
+                    IconURL = "http://ddragon.leagueoflegends.com/cdn/10.23.1/img/profileicon/${AcIcon}.png"
+                    imageView.loadUrl(IconURL)
+                    textId.setText(AcName)
+                    textLev.setText(AcLevel)
+                }
 
-            override fun onFailure(call: Call<Summoner>, t: Throwable) {
-                Log.i("여기",t.message)
-            }
-        })
+                override fun onFailure(call: Call<Summoner>, t: Throwable) {
+                    Log.i("여기",t.message)
+                }
+            })
+
+        }
 
     }
     fun ImageView.loadUrl(url: String){
